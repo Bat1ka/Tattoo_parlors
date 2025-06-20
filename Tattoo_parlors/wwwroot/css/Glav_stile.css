@@ -1,0 +1,116 @@
+﻿/* Общие стили для html и body */
+html, body {
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Фон страницы — без изменений */
+body {
+    background-image: url('../images/tum.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+/* Блок приветствия */
+.intro-container {
+    width: 70%;
+    margin: 50px auto 0;
+    padding: 40px 30px;
+    background-color: #2e2e2e; /* темно-серый фон */
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    color: #e0e0e0;
+}
+
+
+    .intro-container h1 {
+        margin-top: 0;
+        font-size: 2.5em;
+        color: #ffffff;
+    }
+
+    .intro-container p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #cccccc;
+    }
+
+/* Блок с информацией о тату мастерах */
+.tattooists-container {
+    width: 70%;
+    margin: 50px auto;
+    padding: 40px 30px;
+    background-color: #2e2e2e; /* темно-серый фон */
+    border-radius: 12px;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    color: #e0e0e0;
+}
+
+    .tattooists-container h2 {
+        text-align: center;
+        margin-bottom: 20px;
+        font-size: 2em;
+        color: #ffffff;
+        border-bottom: 2px solid #444444;
+        padding-bottom: 10px;
+    }
+
+/* Контейнер карточек тату мастеров */
+.tattooist-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+}
+
+/* Карточка мастера */
+.tattooist-card {
+    width: 200px;
+    padding: 15px;
+    text-align: center;
+    background-color: #3a3a3a; /* чуть светлее для разнообразия */
+    border: 1px solid #555555;
+    border-radius: 12px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.4);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #e0e0e0;
+    
+}
+
+    .tattooist-card a {
+        text-decoration: none; /* Убирает подчеркивание у ссылок */
+    }
+
+    .tattooist-card:hover {
+       
+        transform: translateY(-5px);
+        box-shadow: 0px 12px 24px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Стили для фото мастера */
+    .tattooist-card img {
+        width: 200px; /* Фиксированная ширина изображения */
+        height: 300px; /* Фиксированная высота изображения */
+        object-fit: cover; /* Изображение масштабируется для полного заполнения контейнера */
+        border-radius: 50%; /* Для создания круглой формы – оставьте, если нужен круглый эффект */
+        margin-bottom: 10px;
+        transition: transform 0.3s ease;
+    }
+
+        .tattooist-card img:hover {
+            transform: scale(1.05);
+        }
+
+    /* Текст карточки */
+    .tattooist-card p {
+      
+        font-size: 1em;
+        margin: 0;
+        color: #cccccc;
+    }

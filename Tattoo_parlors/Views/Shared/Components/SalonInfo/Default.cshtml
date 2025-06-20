@@ -1,0 +1,49 @@
+﻿@model Tattoo_parlors.Models.SalonInfo
+
+<footer class="main-footer">
+    <div class="container_f">
+        <div class="footer-left">
+            <p>Тату-салон: @Model?.name</p>
+            <p>Адрес: @Model?.address</p>
+            <p>Телефон: @Model?.phone_number</p>
+
+            <div class="social-links">
+                @if (!string.IsNullOrWhiteSpace(Model?.telegram))
+                {
+                    <a href="@Model.telegram" target="_blank">Telegram</a>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model?.instagram))
+                {
+                    <a href="@Model.instagram" target="_blank">Instagram</a>
+                }
+                @if (!string.IsNullOrWhiteSpace(Model?.vk))
+                {
+                    <a href="@Model.vk" target="_blank">VK</a>
+                }
+            </div>
+        </div>
+
+        <div class="footer-right">
+            <div class="quick-links">
+                <ul>
+                    <li><a asp-area="" asp-controller="Home" asp-action="Glav">Главная</a></li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="O_nas">О нас</a></li>
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a asp-area="" asp-controller="Admin" asp-action="Index">Админ панель</a></li>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <li><a asp-area="" asp-controller="Appointment" asp-action="Index">Запись на консультацию</a></li>
+                    }
+                    <li><a asp-area="" asp-controller="Sketch" asp-action="Sketches">Эскизы</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a asp-area="" asp-controller="Chats" asp-action="Chat">Чат</a></li>
+                    }
+                  
+                </ul>
+            </div>
+        </div>
+    </div>
+</footer>

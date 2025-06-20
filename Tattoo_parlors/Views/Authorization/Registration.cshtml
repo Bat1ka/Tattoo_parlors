@@ -1,0 +1,30 @@
+﻿@model UsersModel
+@{
+    ViewData["Title"] = "Регистрация";
+}
+
+
+<link href="~/css/registr_stile.css" rel="stylesheet" asp-append-version="true" />
+<div class="cont">
+    
+        <h1>@ViewData["Title"]</h1>
+    <form method="post" asp-action="Registration">
+        <label for="name">Введите ваше имя:</label>
+        <input asp-for="name" type="text" id="name" name="name" placeholder="Введите имя">
+
+        <label for="surname">Введите вашу фамилию:</label>
+        <input asp-for="surname" type="text" id="surname" name="surname" placeholder="Введите фамилию">
+
+        <label for="email">Введите вашу почту:</label>
+        <input asp-for="email" type="email" id="email" name="email" placeholder="example@mail.com">
+
+        <label for="numer">Введите ваш номер телефона:</label>
+        <input asp-for="numer" type="text" id="numer" name="numer" placeholder="Введите номер телефона">
+
+        <label for="password">Введите ваш пароль:</label>
+        <input asp-for="password" type="password" id="password" name="password" placeholder="Введите пароль">
+        
+         
+        <button class="bt" type="submit">Зарегистрироватся</button>
+       </form>
+</div>

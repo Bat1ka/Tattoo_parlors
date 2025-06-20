@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Протор</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+
+</head>
+<body>
+    <header class="main-header">
+        <nav class="navigation-bar">
+            <div class="container_h">
+                <ul class="nav-list">
+                    <li>
+                        <a asp-area="" asp-controller="Home" asp-action="Glav">
+							<img src="/images/logo/logo.png"  class="logo"> Главная
+                        </a>
+                    </li>
+                    <li><a asp-area="" asp-controller="Home" asp-action="O_nas">О нас</a></li>
+
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                    {
+                        <li><a asp-area="" asp-controller="Admin" asp-action="Index">Админ панель</a></li>
+                    }
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                    {
+                        <li><a asp-area="" asp-controller="Appointment" asp-action="Index">Запись на консультацию</a></li>
+                    }
+
+                   <li><a asp-area="" asp-controller="Sketch" asp-action="Sketches">Эскизы</a></li>
+                    
+                    @if (User.Identity.IsAuthenticated)
+                {
+                    <li><a asp-area="" asp-controller="Chats" asp-action="Chat">Чат</a></li>
+                }
+                </ul>
+                @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
+                {
+                    <ul class="exit">
+                        <li><a asp-area="" asp-controller="Authorization" asp-action="Logout">Выход</a></li>
+                    </ul>
+                }
+                @if (User.Identity.IsAuthenticated && User.IsInRole("User"))
+                {
+                    <ul class="exit">
+                        <li><a asp-area="" asp-controller="Prof" asp-action="Profil">Профиль</a></li>
+                    </ul>
+                 }
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <ul class="void">
+                        <li><a asp-area="">Вход</a></li>
+                    </ul>
+                }
+                
+            </div>
+        </nav>
+    </header>
+    <div class="container_m">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    @await Component.InvokeAsync("SalonInfo")
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <form asp-controller="Authorization" asp-action="Void" method="get">
+                <button class="avto" type="submit">Авторизация</button>
+            </form>
+            <form asp-controller="Authorization" asp-action="Registration" method="get">
+                <button type="submit">Регистрация</button>
+            </form>
+
+        </div>
+    </div>
+
+</body>
+</html>
+<script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const loginLink = document.querySelector('.void a'); // Уточнённый селектор
+        const modal = document.getElementById("login-modal");
+        const closeButton = document.querySelector(".close-button");
+
+        if (loginLink) {
+            loginLink.addEventListener("click", function (e) {
+                e.preventDefault();
+                modal.style.display = "block";
+            });
+        }
+
+        if (closeButton) {
+            closeButton.addEventListener("click", function () {
+                modal.style.display = "none";
+            });
+        }
+
+        window.addEventListener("click", function (e) {
+            if (e.target === modal) {
+                modal.style.display = "none";
+            }
+        });
+    });
+
+
+</script>

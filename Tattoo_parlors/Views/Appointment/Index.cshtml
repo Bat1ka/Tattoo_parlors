@@ -1,0 +1,71 @@
+﻿@model Tattoo.AppointmentViewModel
+@{
+    ViewData["Title"] = "Запись";
+}
+<link href="~/css/Servis_stile.css" rel="stylesheet" asp-append-version="true" />
+<div class="left-div">
+    <h2>Запись на консультацию</h2>
+    <form id="bookingForm" asp-action="BookAppointment" method="post">
+        <div>
+            <label>Тату-мастер</label>
+            <select id="artistSelect" name="TattooArtistId">
+                <option value="">Выберите тату-мастера</option>
+                @foreach (var artist in Model.TattooArtists)
+                {
+                    <option value="@artist.id">@artist.name</option>
+                }
+            </select>
+        </div>
+        <div>
+            <label>Дата</label>
+            <input type="date" id="datePicker" name="Date" />
+        </div>
+        <div>
+            <label>Слот</label>
+            <select id="slotSelect" name="SlotNumber">
+                <option value="">Выберите слот</option>
+            </select>
+        </div>
+       
+        <button type="submit">Записаться</button>
+    </form>
+</div>
+<div class="right-div">
+    <h2>Информация</h2>
+    <p>Информация о предоставляемых услугах тату салона находится на странице "О нас"</p>
+</div>
+
+<script>
+    function loadAvailableSlots() {
+        var artistId = document.getElementById("artistSelect").value;
+        var dateInput = document.getElementById("datePicker");
+        var dateValue = dateInput.value;
+        if (artistId && dateValue) {
+            var selectedDate = new Date(dateValue);
+            var dayOfWeek = selectedDate.getDay(); // 0 = воскресенье, 6 = суббота
+            if (dayOfWeek === 0 || dayOfWeek === 6) {
+                alert("Пожалуйста, выберите будний день (Пн-Пт). Выбранный день является выходным.");
+                dateInput.value = ""; // Сброс значения даты
+                // Очищаем список доступных слотов
+                document.getElementById("slotSelect").innerHTML = '<option value="">Выберите слот</option>';
+                return;
+            }
+            fetch(`/Appointment/GetAvailableSlots?tattooArtistId=${artistId}&date=${dateValue}`)
+                .then(response => response.json())
+                .then(data => {
+                    var slotSelect = document.getElementById("slotSelect");
+                    slotSelect.innerHTML = '<option value="">Выберите слот</option>';
+                    data.forEach(function(slot) {
+                        var option = document.createElement("option");
+                        option.value = slot.slotNumber;
+                        option.text = "Слот " + slot.slotNumber + " (" + slot.startTime + ")";
+                        slotSelect.appendChild(option);
+                    });
+                });
+        }
+    }
+
+    document.getElementById("artistSelect").addEventListener("change", loadAvailableSlots);
+    document.getElementById("datePicker").addEventListener("change", loadAvailableSlots);
+</script>
+

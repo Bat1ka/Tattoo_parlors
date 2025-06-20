@@ -1,0 +1,25 @@
+﻿@model Tattoo.ServicesModel
+@{
+    ViewData["Title"] = "Редактировать услугу";
+}
+<link href="~/css/EditService.css" rel="stylesheet" asp-append-version="true" />
+<div class="edit-service-container">
+<h2>Редактировать услугу</h2>
+<form asp-action="EditService" method="post">
+    @Html.AntiForgeryToken()
+    <input type="hidden" asp-for="id" />
+    <div>
+        <label>Название</label>
+        <input asp-for="name" />
+    </div>
+    <div>
+        <label>Цена</label>
+        <input asp-for="price" />
+    </div>
+    <div>
+        <label>Описание</label>
+        <textarea asp-for="description"></textarea>
+    </div>
+    <button type="submit">Сохранить изменения</button>
+</form>
+</div>

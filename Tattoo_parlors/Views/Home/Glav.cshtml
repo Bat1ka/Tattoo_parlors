@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewData["Title"] = "Главная";
+}
+<link href="~/css/glav_stile.css" rel="stylesheet" asp-append-version="true" />
+<!-- Блок приветствия и описания тату-салона -->
+<div class="intro-container">
+    <h1>Добро пожаловать</h1>
+    <p>
+        Тату салон <strong>"@Model.SalonInfos.name"</strong> — @Model.SalonInfos.glav_info
+    </p>
+</div>
+
+<!-- Блок с информацией о тату мастерах -->
+<div class="tattooists-container">
+    <h2>Наши тату мастера</h2>
+    <div class="tattooist-list">
+        @foreach (var tattooist in Model.Tattooists)
+        {
+            <div class="tattooist-card">
+                <a href="@Url.Action("Sketches", "Sketch", new { tattooistId = tattooist.id })">
+                    <img src="@Url.Content("~/images/tattooists/" + tattooist.id + ".jpg")" alt="@tattooist.name" />
+                    <p>@tattooist.name</p>
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+

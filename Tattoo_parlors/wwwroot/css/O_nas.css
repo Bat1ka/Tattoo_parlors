@@ -1,0 +1,101 @@
+﻿/* Основные стили страницы */
+html, body {
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Фон страницы — без изменений */
+body {
+    background-image: url('../images/tum.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+.intro-container {
+    width: 70%;
+    margin: 50px auto 0;
+    padding: 40px 30px;
+    background-color: #2e2e2e; /* темно-серый фон */
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s ease;
+    color: #e0e0e0;
+}
+
+    .intro-container h1 {
+        margin-top: 0;
+        font-size: 2.5em;
+        color: #ffffff;
+    }
+
+    .intro-container p {
+        font-size: 1.1em;
+        line-height: 1.6;
+        color: #cccccc;
+    }
+    .intro-container img {
+        max-width: 100%;
+        height: auto;
+        display: block;
+        margin: 0 auto;
+    }
+
+/* Стили для блока карточек услуг */
+.services-container {
+    width: 70%;
+    margin: 50px auto;
+    padding: 40px 30px;
+    background-color: #2e2e2e; /* фон блока услуг */
+    border-radius: 12px;
+    color: #e0e0e0;
+}
+
+    .services-container h2 {
+        font-size: 2.2em;
+        text-align: center;
+        margin-bottom: 30px;
+        color: #ffffff;
+    }
+
+.cards-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+}
+
+/* Стили карточек услуг */
+.service-card {
+    background-color: #3a3a3a; /* фон карточки */
+    padding: 20px;
+    border-radius: 8px;
+    width: calc(33.33% - 20px); /* можно настроить ширину карточки под ваши нужды */
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+}
+
+    .service-card:hover {
+        transform: scale(1.05);
+    }
+
+    .service-card h3 {
+        margin-top: 0;
+        font-size: 1.5em;
+        color: #ffffff;
+    }
+
+    .service-card .price {
+        font-size: 1.2em;
+        color: #ffcc00; /* можно изменить для выделения цены */
+        margin: 10px 0;
+    }
+
+    .service-card .description {
+        font-size: 1em;
+        line-height: 1.5;
+        color: #cccccc;
+    }

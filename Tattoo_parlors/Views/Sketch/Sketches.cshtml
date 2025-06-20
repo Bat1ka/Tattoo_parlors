@@ -1,0 +1,56 @@
+﻿@using static Tattoo_parlors.Models.Tattoo
+@model SketchesViewModel
+@{
+    ViewData["Title"] = "Эскизы";
+}
+
+<link href="~/css/Sketches.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="sketch-wrapper">
+    <div class="custom-container">
+        <h1>Галерея эскизов</h1>
+        <div class="filter-container">
+            <label>Фильтр по тату-мастеру:</label>
+            <select id="tattooistFilter">
+                @if (Model.SelectedTattooistId == 0)
+                {
+                    <option value="0" selected="selected">Все мастера</option>
+                }
+                else
+                {
+                    <option value="0">Все мастера</option>
+                }
+                @foreach (var artist in Model.Tattooists)
+                {
+                    if (artist.id == Model.SelectedTattooistId)
+                    {
+                        <option value="@artist.id" selected="selected">@artist.name</option>
+                    }
+                    else
+                    {
+                        <option value="@artist.id">@artist.name</option>
+                    }
+                }
+            </select>
+        </div>
+    </div>
+
+
+    <div class="sketch-gallery">
+        @foreach (var sketch in Model.Sketches)
+        {
+            <div class="sketch-item">
+                <a href="@Url.Action("Details", "Sketch", new { id = sketch.id })">
+                    <img src="@sketch.imagePath" alt="Эскиз от @sketch.Tattooist.name" />
+                </a>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    document.getElementById("tattooistFilter").addEventListener("change", function () {
+        var selectedId = this.value;
+        window.location.href = '@Url.Action("Sketches", "Sketch")?tattooistId=' + selectedId;
+    });
+</script>

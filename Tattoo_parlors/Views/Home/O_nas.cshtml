@@ -1,0 +1,47 @@
+﻿@model AboutViewModel
+@{
+    ViewData["Title"] = "О нас";
+}
+<link rel="stylesheet" href="~/css/O_nas.css" asp-append-version="true" />
+
+<div class="intro-container">
+    <h1>О нас</h1>
+    <p>
+        @Model.SalonInfo.o_nas_info
+    </p>
+    <p>Адрес: @Model.SalonInfo.address</p>
+    <p>Телефон: @Model.SalonInfo.phone_number</p>
+</div>
+
+<div class="intro-container">
+    @if (User.IsInRole("Admin"))
+    {
+        <form asp-action="UploadImage" asp-controller="Home" method="post" enctype="multipart/form-data">
+            <input type="file" name="imageFile" accept="image/*" />
+            <button type="submit">Загрузить</button>
+        </form>
+    }
+    <img src="@Url.Content("~/images/Salon/latest.jpg")" alt="Фото салона" />
+</div>
+
+<!-- Блок карточек услуг -->
+<div class="services-container">
+    <h2>Наши услуги</h2>
+    <div class="cards-wrapper">
+        @if (Model.Services != null && Model.Services.Any())
+        {
+            foreach (var service in Model.Services)
+            {
+                <div class="service-card" data-service-id="@service.id">
+                    <h3>@service.name</h3>
+                    <p class="price">Цена: @service.price</p>
+                    <p class="description">@service.description</p>
+                </div>
+            }
+        }
+        else
+        {
+            <p>Нет доступных услуг в данный момент.</p>
+        }
+    </div>
+</div>

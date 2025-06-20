@@ -1,0 +1,22 @@
+﻿@model UsersModel
+@{
+    ViewData["Title"] = "Вход";
+}
+@if (!string.IsNullOrEmpty(ViewBag.ErrorMessage))
+{
+    <p style="color: red;">@ViewBag.ErrorMessage</p>
+}
+
+<link href="~/css/log_stile.css" rel="stylesheet" asp-append-version="true" />
+<div class="cont">
+    <form method="post" asp-action="Void">
+        <h1>@ViewData["Title"]</h1>
+        <label for="email">Введите вашу почту:</label>
+        <input asp-for="email" type="email" id="email" name="email" placeholder="example@mail.com">
+
+        <label for="password">Введите ваш пароль:</label>
+        <input asp-for="password" type="password" id="password" name="password" placeholder="Введите пароль">
+    
+        <button class="bt" type="submit">Войти</button>
+    </form>
+</div>

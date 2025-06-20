@@ -1,0 +1,233 @@
+/*Общая страница*/
+/* Убедимся, что страница занимает весь экран */
+.logo {
+    width: 100px; /* или нужный размер */
+    height: auto;
+    margin-right: 10px; /* небольшой отступ перед текстом */
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Общие стили для контейнера */
+.container_h {
+    height: 100px;
+    display: flex; /* Используем Flexbox */
+    flex-direction: row; /* Горизонтальное расположение элементов */
+    justify-content: space-between; /* Распределяем элементы: между ними будет пространство */
+    align-items: center; /* Центрируем элементы по вертикали */
+}
+.container_m {
+min-height: 100%;
+display: flex;
+flex-direction: column;
+}
+
+/* Стили для header */
+.main-header {
+    background-color: #2e2e2e;
+    padding: 0;
+    height: 100px;
+}
+
+/* Стили для nav-list */
+.nav-list {
+    display: flex; /* Flexbox для списка */
+    align-items: center; /* Центрируем элементы по вертикали */
+    justify-content: center; /* Центрируем содержимое списка */
+    list-style: none; /* Убираем маркеры списка */
+    margin: 0; /* Сбрасываем внешние отступы */
+    padding: 0; /* Сбрасываем внутренние отступы */
+}
+    .nav-list img {
+        display: inline-block;
+        vertical-align: middle;
+    }
+    .nav-list li {
+        margin: 0 15px; /* Отступы между пунктами меню */
+    }
+
+        .nav-list li a {
+            color: #ecf0f1; /* Цвет текста */
+            text-decoration: none; /* Убираем подчеркивание */
+            font-size: 18px; /* Размер текста */
+            transition: color 0.3s; /* Плавный переход цвета при наведении */
+        }
+
+            .nav-list li a:hover {
+                color: #1abc9c; /* Цвет текста при наведении */
+            }
+
+/* Стили для void */
+.void {
+    display: flex; /* Flexbox для списка void */
+    align-items: center; /* Центрируем элементы по вертикали */
+    justify-content: center; /* Центрируем содержимое */
+    list-style: none; /* Убираем маркеры списка */
+    margin: 0; /* Сбрасываем внешние отступы */
+    padding: 0; /* Сбрасываем внутренние отступы */
+}
+
+    .void li {
+        margin: 0 15px; /* Отступы между элементами */
+    }
+
+        .void li a {
+            color: #ecf0f1; /* Цвет текста */
+            text-decoration: none; /* Убираем подчеркивание */
+            font-size: 18px; /* Размер текста */
+            transition: color 0.3s; /* Плавный переход цвета при наведении */
+        }
+
+            .void li a:hover {
+                color: #1abc9c; /* Цвет текста при наведении */
+            }
+/* Стили для void */
+.exit {
+    display: flex; /* Flexbox для списка void */
+    align-items: center; /* Центрируем элементы по вертикали */
+    justify-content: center; /* Центрируем содержимое */
+    list-style: none; /* Убираем маркеры списка */
+    margin: 0; /* Сбрасываем внешние отступы */
+    padding: 0; /* Сбрасываем внутренние отступы */
+}
+
+    .exit li {
+        margin: 0 15px; /* Отступы между элементами */
+    }
+
+        .exit li a {
+            color: #ecf0f1; /* Цвет текста */
+            text-decoration: none; /* Убираем подчеркивание */
+            font-size: 18px; /* Размер текста */
+            transition: color 0.3s; /* Плавный переход цвета при наведении */
+        }
+
+            .exit li a:hover {
+                color: #1abc9c; /* Цвет текста при наведении */
+            }
+/* Стили для footer */
+.main-footer {
+    background-color: #2e2e2e;
+    color: #ecf0f1;
+    padding: 30px 40px;
+    margin-top: auto;
+    font-size: 14px;
+}
+
+.container_f {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+}
+
+.footer-left, .footer-right {
+    flex: 1 1 300px;
+}
+
+    .footer-left p {
+        margin: 6px 0;
+    }
+
+    .footer-left .social-links {
+        margin-top: 10px;
+    }
+
+        .footer-left .social-links a {
+            color: #ecf0f1;
+            margin-right: 12px;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+            .footer-left .social-links a:hover {
+                text-decoration: underline;
+                color: #1abc9c;
+            }
+
+    .footer-right .quick-links {
+        text-align: right;
+    }
+
+        .footer-right .quick-links ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-right .quick-links li {
+            margin-bottom: 6px;
+        }
+
+        .footer-right .quick-links a {
+            color: #ecf0f1;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+            .footer-right .quick-links a:hover {
+                text-decoration: underline;
+                color: #1abc9c;
+            }
+
+
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background-color: #2e2e2e;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 18px;
+    cursor: pointer;
+    
+}
+
+button {
+    margin: 10px;
+    padding: 12px 24px;
+    font-size: 16px;
+    color: #fff;
+    background: #808080; /* Основной оттенок синего, ярко и не агрессивно */
+    border: none;
+    border-radius: 25px; /* Скругление для более «натурального» вида */
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+    button:hover {
+        background: #5e5c5c; /* Немного затемнённый цвет при наведении */
+        transform: translateY(-3px); /* Лёгкое поднятие для эффекта живости */
+    }
+
+    button:active {
+        background: #5e5c5c; /* Ещё чуть более тёмный цвет при нажатии */
+        transform: translateY(0);
+    }
+

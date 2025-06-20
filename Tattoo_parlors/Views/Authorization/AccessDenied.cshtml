@@ -1,0 +1,19 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Доступ запрещён</title>
+</head>
+<body>
+    <h1>Доступ запрещён</h1>
+    <p>У вас нет прав для доступа к этой странице.</p>
+    @if (ViewBag.ReturnUrl != null)
+    {
+        <p>Вернуться на предыдущую страницу: <a href="@ViewBag.ReturnUrl">Назад</a></p>
+    }
+</body>
+</html>

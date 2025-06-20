@@ -1,0 +1,325 @@
+﻿/* Общие настройки */
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #0e0e0e;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* Универсальные стили контейнеров */
+.upload-column,
+.admin-tools,
+.appointment-list,
+.upload-and-list,
+.service-form,
+.service-list,
+.add-tattooist,
+.form-container {
+    background-color: #1e1e1e;
+    border: 1px solid #333;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    margin-bottom: 40px;
+}
+
+    /* Стили форм */
+    .upload-column form,
+    .service-form form,
+    .add-tattooist form {
+        display: flex;
+        flex-direction: column;
+    }
+
+        .upload-column form div,
+        .service-form form div,
+        .add-tattooist form div {
+            margin-bottom: 15px;
+        }
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+}
+
+input[type="text"],
+textarea,
+select,
+input.form-control,
+textarea.form-control {
+    width: 100%;
+    background-color: #1c1c1c;
+    color: #f0f0f0;
+    border: 1px solid #444;
+    border-radius: 6px;
+    padding: 12px;
+    transition: border-color 0.3s ease;
+}
+
+    input[type="text"]:focus,
+    textarea:focus,
+    select:focus {
+        border-color: #007BFF;
+        outline: none;
+    }
+
+textarea {
+    resize: vertical;
+}
+
+/* Основной контейнер */
+.admin-container {
+    display: flex;
+    margin: 20px;
+}
+
+/* Боковая панель */
+.admin-sidebar {
+    width: 240px;
+    background-color: #1c1c1c;
+    border-right: 1px solid #444;
+    padding: 24px;
+    box-shadow: 4px 0 12px rgba(0, 0, 0, 0.7);
+    border-radius: 10px;
+    position: sticky;
+    top: 20px;
+    height: calc(100vh - 40px);
+    overflow-y: auto;
+}
+
+    .admin-sidebar ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+    }
+
+        .admin-sidebar ul li {
+            padding: 12px 14px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+            .admin-sidebar ul li a {
+                color: #f0f0f0;
+                text-decoration: none;
+                display: block;
+            }
+
+            .admin-sidebar ul li:hover,
+            .admin-sidebar ul li.active {
+                background-color: #3d3d3d;
+                transform: translateX(4px);
+            }
+
+/* Основной контент */
+.admin-content {
+    flex: 1;
+    background-color: #1a1a1a;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    margin-left: 20px;
+}
+
+/* Таб контент */
+.tab-content {
+    display: none;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+}
+
+    .tab-content.active {
+        display: block;
+        opacity: 1;
+        pointer-events: auto;
+    }
+
+/* Таблицы */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 15px;
+    margin-bottom: 20px;
+}
+
+    table th,
+    table td {
+        padding: 12px 15px;
+        text-align: left;
+        border: 1px solid #444;
+    }
+
+    table thead {
+        background-color: #292929;
+    }
+
+    table tbody tr:nth-child(even) {
+        background-color: #2a2a2a;
+    }
+
+    table tbody tr:hover {
+        background-color: #3d3d3d;
+        cursor: pointer;
+    }
+
+    table th {
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+    }
+
+/* Кнопки */
+button,
+#userTab .btn,
+.service-list a {
+    padding: 10px 16px;
+    font-size: 15px;
+    font-weight: 500;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background-color: #808080;
+    color: white;
+    box-shadow: 0 2px 6px rgba(128, 128, 128, 0.2);
+}
+
+    button:hover,
+    #userTab .btn:hover,
+    .service-list a:hover {
+        opacity: 0.85;
+        transform: scale(1.05);
+    }
+
+/* Опасные кнопки */
+.btn-danger {
+    background-color: #808080;
+    color: white;
+}
+
+    .btn-danger:hover {
+        opacity: 0.85;
+        transform: scale(1.05);
+    }
+
+/* Форма с большими полями */
+textarea.large-input {
+    width: 100%;
+    height: 150px;
+}
+
+/* Группы форм */
+.form-group {
+    margin-bottom: 15px;
+}
+
+    .form-group label {
+        margin-bottom: 5px;
+    }
+
+/* Контейнер формы */
+.form-container {
+    width: 50%;
+    margin: 20px auto;
+}
+
+/* Отдельные секции */
+#servicesTab {
+    padding: 10px;
+}
+
+#userTab table {
+    background-color: #252525;
+    color: white;
+}
+
+#userTab select {
+    background-color: #252525;
+    color: white;
+    border: 1px solid #808080;
+    padding: 5px;
+}
+/* Обертка для прокрутки таблицы на мобильных */
+.salon-table-wrapper {
+    overflow-x: auto;
+    max-width: 100%;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+
+/* Таблица */
+.salon-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #1a1a1a;
+    border-radius: 10px;
+    overflow: hidden;
+    font-size: 15px;
+    table-layout: auto;
+}
+
+    /* Заголовки и ячейки */
+    .salon-table th,
+    .salon-table td {
+        padding: 12px 15px;
+        text-align: left;
+        border: 1px solid #444;
+        word-break: break-word;
+        white-space: normal;
+        vertical-align: top;
+    }
+
+    /* Заголовки */
+    .salon-table thead {
+        background-color: #292929;
+    }
+
+    .salon-table th {
+        color: #ffffff;
+        font-weight: 600;
+        letter-spacing: 0.5px;
+        text-align: left;
+    }
+
+    /* Чередование и наведение */
+    .salon-table tbody tr:nth-child(even) {
+        background-color: #2a2a2a;
+    }
+
+    .salon-table tbody tr:hover {
+        background-color: #3d3d3d;
+        cursor: pointer;
+    }
+
+    /* Ограничение по высоте больших полей */
+    .salon-table td[data-field="glav_info"],
+    .salon-table td[data-field="o_nas_info"] {
+        max-height: 150px;
+        overflow-y: auto;
+    }
+
+    /* Подсветка редактируемых ячеек */
+    .salon-table .editable:focus {
+        outline: none;
+        background-color: #2c3e50;
+        color: #1abc9c;
+    }
+
+    /* Адаптация длинных заголовков */
+    .salon-table th {
+        word-wrap: break-word;
+        min-width: 100px;
+    }
+
+

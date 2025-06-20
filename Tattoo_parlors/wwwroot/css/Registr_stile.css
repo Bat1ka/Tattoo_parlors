@@ -1,0 +1,69 @@
+﻿/* Общие стили для html и body */
+html, body {
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Фон страницы — без изменений */
+body {
+    background-image: url('../images/tum.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+.cont {
+    display: flex;
+    flex-direction: column; /* Располагает элементы вертикально */
+    justify-content: center;
+    align-items: center;
+    height: 700px; /* Высота контейнера */
+    width: 400px; /* Ширина контейнера */
+    background-color: #2e2e2e;
+    border-radius: 20px; /* Скруглённые углы */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Небольшая тень для выделения */
+    margin: auto; /* Автоматически центрирует div */
+    position: absolute; /* Позиционирование относительно окна */
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    color: white;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Задаёт расстояние между элементами формы */
+}
+
+.bt {
+    background-color: #808080;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+    .bt:hover {
+        background-color: #5e5c5c;
+    }
+input {
+    width: 90%; /* Поля будут занимать всю доступную ширину */
+    padding: 10px; /* Внутренний отступ для удобства ввода */
+    margin: 5px 0; /* Отступ между полями */
+    border: 1px solid #444; /* Лёгкая рамка */
+    border-radius: 5px; /* Скруглённые углы */
+    font-size: 16px; /* Удобный размер текста */
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1); /* Лёгкая внутренняя тень для объёма */
+    outline: none; /* Убирает подсвечивание при фокусе */
+    background-color: #1a1a1a;
+    color: #fff;
+}
+
+   

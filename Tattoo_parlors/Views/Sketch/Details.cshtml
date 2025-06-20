@@ -1,0 +1,24 @@
+﻿@model Tattoo_parlors.Models.Tattoo.SketchModel
+@{
+    ViewData["Title"] = "Детали эскиза";
+}
+
+<link href="~/css/SketchDetails.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="details-container">
+    <div class="sketch-image">
+        <img src="@Model.imagePath" alt="Эскиз от @Model.Tattooist.name" />
+        <a class="back-link" href="@Url.Action("Sketches", "Sketch")">← Вернуться к галерее</a>
+    </div>
+    <div class="tattooist-panel">
+        <h2>Тату-мастер</h2>
+        <p class="name">@Model.Tattooist.name</p>
+        <div class="biography">
+            @Model.Tattooist.biography
+        </div>
+        <div class="sketch-description">
+            <h2>Описание эскиза</h2>
+            <p>@Model.description</p>
+        </div>
+    </div>
+</div>

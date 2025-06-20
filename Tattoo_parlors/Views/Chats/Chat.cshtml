@@ -1,0 +1,71 @@
+﻿@model ChatViewModel
+<link rel="stylesheet" href="~/css/Chat_stile.css" asp-append-version="true" />
+<body>
+    <h1>Чат</h1>
+    <div class="chat-container">
+        <!-- Левая колонка: список пользователей (для администратора) -->
+        @if (Model.CurrentUserRole == 1)
+        {
+            <div class="user-list">
+                <h2>Пользователи</h2>
+                <ul>
+                    @foreach (var user in Model.Users)
+                    {
+                        <li data-user-id="@user.id">
+                            <a href="@Url.Action("Chat", new { selectedUserId = user.id })"
+                               class="@(Model.SelectedUserId == user.id ? "selected" : "")">
+                                @user.name
+                            </a>
+                        </li>
+                    }
+                </ul>
+            </div>
+        }
+
+        <!-- Правая колонка: окно чата и форма ввода сообщений -->
+        <div class="chat-window">
+            @if (Model.Messages != null && Model.Messages.Any())
+            {
+                foreach (var msg in Model.Messages)
+                {
+                    var messageClass = msg.senderId == Model.CurrentUserId ? "message sent" : "message received";
+
+                    <div class="@messageClass">
+                        <strong>@msg.Sender.name</strong>
+                        : <span>@msg.content</span>
+                        <span class="timestamp">(@msg.timestamp.ToString("HH:mm:ss"))</span>
+                    </div>
+                }
+            }
+            else
+            {
+                <div>Нет сообщений.</div>
+            }
+        </div>
+
+            <form asp-action="SendMessage" method="post">
+                <div class="message-input">
+                    <input type="text" name="MessageContent" id="message" placeholder="Введите сообщение" required />
+                    <button type="submit">Отправить</button>
+                </div>
+                @if (Model.CurrentUserRole == 1)
+                {
+                    <input type="hidden" name="SelectedUserId" id="SelectedUserId" value="@Model.SelectedUserId" />
+                }
+            </form>
+        </div>
+    </div>
+
+    @if (!ViewData.ModelState.IsValid)
+    {
+        <div style="color:red;">
+            @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+            {
+                <p>@error.ErrorMessage</p>
+            }
+        </div>
+    }
+
+    <!-- Скрипт для кликабельного выбора пользователя -->
+ 
+</body>

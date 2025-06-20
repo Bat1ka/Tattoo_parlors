@@ -1,0 +1,71 @@
+﻿/* Общие стили для документа */
+html, body {
+    height: 100%;
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #1e1e1e; /* Основной фон */
+}
+
+/* Стили для страницы деталей эскиза */
+.details-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    padding: 20px;
+    background-color: #2e2e2e; /* Фон контейнера */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    max-width: 1200px;
+    margin: auto;
+    margin-top: 40px; /* Отступ сверху */
+    margin-bottom: 40px;
+}
+.sketch-image {
+    flex: 2;
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+    .sketch-image img {
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+/* Ссылка для возврата, теперь белого цвета */
+.back-link {
+    display: inline-block;
+    margin-top: 10px;
+    text-decoration: none;
+    color: #ffffff; /* Белая ссылка */
+    font-weight: bold;
+}
+
+/* Панель тату-мастера со свойствами, не сливающимися с фоном */
+.tattooist-panel {
+    flex: 1;
+    background-color: #3e3e3e; /* Выбранный цвет, чтобы выделяться */
+    border-left: 2px solid #555; /* Можно подобрать другой оттенок для границы */
+    padding: 20px;
+    border-radius: 8px;
+    min-width: 250px;
+    color: #ffffff; /* Белый текст внутри */
+}
+
+    .tattooist-panel h2 {
+        margin-top: 0;
+        color: #ffffff; /* Белый текст для заголовка */
+    }
+
+    .tattooist-panel .name {
+        font-size: 1.2em;
+        color: #ffffff; /* Белый текст */
+    }
+
+    /* Обеспечиваем единый стиль для биографии */
+    .tattooist-panel .biography {
+        color: #ffffff;
+    }

@@ -1,0 +1,449 @@
+﻿@model Tattoo.AdminViewModel
+@{
+    ViewData["Title"] = "Панель администратора";
+}
+<link href="~/css/Admin_Servis_stile.css" rel="stylesheet" asp-append-version="true" />
+
+<div class="admin-container">
+    <!-- Боковая навигационная панель -->
+    <div class="admin-sidebar">
+        <ul>
+            <li class="nav-item active" data-tab="sessionsTab">
+                <a href="javascript:void(0)">Сеансы</a>
+            </li>
+            <li class="nav-item" data-tab="artistsTab">
+                <a href="javascript:void(0)">Тату мастера</a>
+            </li>
+            <li class="nav-item" data-tab="servicesTab">
+                <a href="javascript:void(0)">Услуги</a>
+            </li>
+            <li class="nav-item" data-tab="userTab">
+                <a href="javascript:void(0)">Пользователи</a>
+            </li>
+            <li class="nav-item" data-tab="salonInfoTab">
+                <a href="javascript:void(0)">Информация о салоне</a>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Основной блок с табами -->
+    <div class="admin-content">
+        <!-- Таб "Сеансы": видны блоки "Настройка слотов" и "Записи на сеансы" -->
+        <div id="sessionsTab" class="tab-content active">
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <div class="admin-tools">
+                <h2>Настройка слотов</h2>
+                <form asp-action="CreateSlots" method="post">
+                    <div>
+                        <label>Тату-мастер</label>
+                        <select asp-for="CreateSlotsData.TattooArtistId" asp-items='@(new SelectList(Model.TattooArtists, "id", "name"))'>
+                            <option value="">Выберите тату-мастера</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label>Количество слотов</label>
+                        <input type="number" asp-for="CreateSlotsData.SlotCount" id="slotCount" min="1" />
+                    </div>
+                    <div id="timeInputs">
+                        <!-- Здесь будут динамически добавляться поля ввода времени -->
+                    </div>
+                    <button type="submit">Сохранить</button>
+                </form>
+            </div>
+
+            <div class="appointment-list">
+                <h2>Записи на сеансы</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Пользователь</th>
+                            <th>Тату-мастер</th>
+                            <th>Дата</th>
+                            <th>Время</th>
+                            <th>Слот</th>
+                            <th>Действия</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var appointment in Model.Appointments)
+                        {
+                            <tr>
+                                <td>@appointment.User.name @appointment.User.surname</td>
+                                <td>@appointment.TattooArtist.name</td>
+                                <td>@appointment.date.ToShortDateString()</td>
+                                <td>
+                                    @{
+                                        var template = Model.TattooArtists
+                                        .FirstOrDefault(a => a.id == appointment.tattooArtistId)
+                                        ?.ScheduleTemplates.FirstOrDefault(s => s.slotNumber == appointment.slotNumber);
+                                        if (template != null)
+                                        {
+                                            @template.startTime.ToString(@"hh\:mm")
+                                        }
+                                    }
+                                </td>
+                                <td>@appointment.slotNumber</td>
+                                <td>
+                                    <form asp-action="DeleteAppointment" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту запись?');">
+                                        @Html.AntiForgeryToken()
+                                        <input type="hidden" name="appointmentId" value="@appointment.id" />
+                                        <button type="submit" class="btn btn-danger">Удалить</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Таб "Тату мастера": видны блоки "Загрузка эскизов" и "Список тату-мастеров" -->
+        <div id="artistsTab" class="tab-content">
+            <div class="upload-and-list">
+                <!-- Левая колонка: Загрузка эскиза -->
+                <div class="upload-column">
+                    <div class="sketch-upload">
+                        <h2>Загрузка эскиза татуировки</h2>
+                        <form asp-action="UploadSketch" method="post" enctype="multipart/form-data">
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <label>Выберите тату-мастера</label>
+                                <select name="tattooistId">
+                                    <option value="">Выберите мастера</option>
+                                    @foreach (var artist in Model.TattooArtists)
+                                    {
+                                        <option value="@artist.id">@artist.name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div>
+                                <label>Выберите изображение (JPG)</label>
+                                <input type="file" name="imageFile" accept=".jpg" required />
+                            </div>
+                            <div>
+                                <label>Описание эскиза</label>
+                                <textarea name="description" rows="3" required></textarea>
+                            </div>
+                            <button type="submit">Загрузить эскиз</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                <!-- Правая колонка: Список тату-мастеров и добавление -->
+                <div class="list-column">
+                    <div class="tattoo-artist-upload">
+                        <h2>Список тату-мастеров</h2>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Имя</th>
+                                    <th>Биография</th>
+                                    <th>Загрузить изображение (JPG)</th>
+                                    <th>Действия</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var artist in Model.TattooArtists)
+                                {
+                                    <tr>
+                                        <td>@artist.id</td>
+                                        <td>@artist.name</td>
+                                        <td>@artist.biography</td>
+                                        <td class="wrap-column">
+                                            <form asp-action="UploadTattooistImage" method="post" enctype="multipart/form-data">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="artistId" value="@artist.id" />
+                                                <input type="file" name="imageFile" accept=".jpg" />
+                                                <button type="submit">Загрузить</button>
+                                            </form>
+                                        </td>
+                                        <td>
+                                            <form asp-action="DeleteTattooist" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить этого тату-мастера?');">
+                                                @Html.AntiForgeryToken()
+                                                <input type="hidden" name="tattooistId" value="@artist.id" />
+                                                <button type="submit" class="btn btn-danger">Удалить</button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+                
+
+                    <div class="add-tattooist">
+                        <h2>Добавить тату-мастера</h2>
+                        <form asp-action="AddTattooist" method="post">
+                            @Html.AntiForgeryToken()
+                            <div>
+                                <label>Имя тату-мастера</label>
+                                <input type="text" name="name" required placeholder="Введите имя" />
+                            </div>
+                            <div>
+                                <label>Биография тату-мастера</label>
+                                <textarea name="biography" placeholder="Введите биографию"></textarea>
+                            </div>
+                            <button type="submit">Добавить</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="servicesTab" class="tab-content"> 
+            <h2>Услуги</h2> 
+            <!-- Форма для добавления новой услуги -->
+
+            <div class="service-form"> <form asp-action="AddService" method="post"> @Html.AntiForgeryToken() 
+                <div> 
+                    <label>Название</label> 
+                    <input type="text" name="name" required placeholder="Введите название услуги" /> 
+                </div>
+                <div> 
+                    <label>Цена</label> 
+                    <input type="text" name="price" required placeholder="Укажите цену" /> 
+                </div> 
+                <div> 
+                    <label>Описание</label> 
+                    <textarea name="description" required placeholder="Введите описание услуги"></textarea>
+                </div> 
+                <button type="submit">Добавить услугу</button> 
+            </form> 
+            </div> <!-- Список существующих услуг --> 
+            <div class="service-list"> 
+                <table> 
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Название</th>
+                            <th>Цена</th>
+                            <th>Описание</th> 
+                            <th>Действия</th> 
+                        </tr>
+                        </thead>
+                        <tbody> 
+                            @foreach (var service in Model.Services)
+                        {
+                            <tr> 
+                                <td>@service.id</td> 
+                                <td>@service.name</td> 
+                                <td>@service.price</td> 
+                                <td>@service.description</td> 
+                                <td> 
+                                    <!-- Форма для удаления услуги --> 
+
+                                <form asp-action="DeleteService" method="post" onsubmit="return confirm('Вы уверены, что хотите удалить эту услугу?');" style="display:inline;"> @Html.AntiForgeryToken() 
+                                    <input type="hidden" name="id" value="@service.id" /> 
+                                    <button type="submit" class="btn btn-danger">Удалить</button> 
+                                </form>
+                                <!-- Ссылка для редактирования услуги -->
+                                <a href="@Url.Action("EditService", "Admin", new { id = service.id })">Редактировать</a> 
+                            </td> 
+                            </tr>
+                        } </tbody> </table> </div> </div>
+
+                        <!-- Контент для вкладки "Пользователи" -->
+<div id="userTab" class="tab-content">
+    <h2>Пользователи</h2>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <th>Имя</th>
+                <th>Номер телефона</th>
+                <th>Роль</th>
+                <th>Действия</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var user in Model.Users)
+            {
+                <tr data-user-id="@user.id">
+                    <td>@(user.name + " " + user.surname)</td>
+                    <td>@user.numer</td>
+                    <td>
+                        <!-- Форма для изменения роли пользователя -->
+                        <form method="post" action="@Url.Action("UpdateUserRole", "Admin")">
+                            @Html.AntiForgeryToken()
+                            <input type="hidden" name="userId" value="@user.id" />
+                            <select name="role" class="role-select">
+                            <!-- Пример списка ролей. При необходимости адаптируйте значения ролей -->
+                                    <option value="0" selected="@(user.role == 0)">Пользователь</option>
+                                    <option value="1" selected="@(user.role == 1)">Администратор</option>
+                                    </select>
+                                    <button type="submit" class="btn btn-success">Изменить роль</button>
+                                </form>
+                            </td>
+                            <td>
+                                <!-- Форма для удаления пользователя -->
+                                <form method="post" action="@Url.Action("DeleteUser", "Admin")"
+                                      onsubmit="return confirm('Вы уверены, что хотите удалить пользователя?');">
+                                    @Html.AntiForgeryToken()
+                                    <input type="hidden" name="userId" value="@user.id" />
+                                    <button type="submit" class="btn btn-danger">Удалить</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+        <div id="salonInfoTab" class="tab-content">
+            <h2>Информация о салоне</h2>
+            <div class="salon-table-wrapper">
+            <table class="salon-table">
+                <thead>
+                    <tr>
+                        
+                        <th>Название</th>
+                        <th>Адрес</th>
+                        <th>Телефон</th>
+                        <th>Telegram</th>
+                        <th>Instagram</th>
+                        <th>VK</th>
+                        <th>Основная информация</th>
+                        <th>О нас</th>
+                        <th>Действия</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var salon in Model.SalonInfos)
+                    {
+                        <tr data-id="@salon.id">
+                         
+                            <!-- Атрибут contenteditable позволяет редактировать значение прямо в ячейке -->
+                            <td contenteditable="true" class="editable" data-field="name">@salon.name</td>
+                            <td contenteditable="true" class="editable" data-field="address">@salon.address</td>
+                            <td contenteditable="true" class="editable" data-field="phone_number">@salon.phone_number</td>
+                            <td contenteditable="true" class="editable" data-field="telegram">@salon.telegram</td>
+                            <td contenteditable="true" class="editable" data-field="instagram">@salon.instagram</td>
+                            <td contenteditable="true" class="editable" data-field="vk">@salon.vk</td>
+                            <td contenteditable="true" class="editable" data-field="glav_info">@salon.glav_info</td>
+                            <td contenteditable="true" class="editable" data-field="o_nas_info">@salon.o_nas_info</td>
+                            <td>
+                                <button class="btn btn-sm btn-primary save-btn">Сохранить</button>
+                               
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            </div>
+            <!-- Форма для создания новой записи -->
+           
+        </div>
+    </div> <!-- .admin-content -->
+</div> <!-- .admin-container -->
+
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Назначаем обработчики кликов всем элементам навигации для переключения вкладок
+        const navItems = document.querySelectorAll('.admin-sidebar .nav-item');
+        navItems.forEach(item => {
+            item.addEventListener('click', function () {
+                document.querySelectorAll('.admin-sidebar .nav-item').forEach(nav => nav.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                this.classList.add('active');
+                var tabId = this.getAttribute('data-tab');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+
+        // Проверяем, есть ли параметр 'activeTab' в URL и переключаем вкладку
+        const urlParams = new URLSearchParams(window.location.search);
+        const activeTab = urlParams.get("activeTab");
+        if (activeTab) {
+            document.querySelectorAll('.admin-sidebar .nav-item').forEach(nav => nav.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            const tabNav = document.querySelector('.admin-sidebar .nav-item[data-tab="' + activeTab + '"]');
+            const tabContent = document.getElementById(activeTab);
+            if (tabNav && tabContent) {
+                tabNav.classList.add("active");
+                tabContent.classList.add("active");
+            }
+        }
+    });
+
+    $(document).ready(function () {
+        // Обработчик кнопки "Сохранить"
+        $(".save-btn").click(function () {
+            var row = $(this).closest("tr");
+            var id = row.data("id");
+            var salonInfo = { id: id };
+
+            row.find(".editable").each(function () {
+                var field = $(this).data("field");
+                var value = $(this).text().trim();
+                salonInfo[field] = value;
+            });
+
+            $.ajax({
+                url: '@Url.Action("UpdateSalonInfo", "Admin")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(salonInfo),
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').first().val() },
+                success: function (response) {
+                    if (response.success) {
+                        alert("Данные сохранены");
+                    } else {
+                        alert("Ошибка: " + response.error);
+                    }
+                },
+                error: function () {
+                    alert("Ошибка запроса");
+                }
+            });
+        });
+
+        // Обработчик кнопки "Удалить"
+        $(".delete-btn").click(function () {
+            if (!confirm("Удалить запись?")) return;
+            var row = $(this).closest("tr");
+            var id = row.data("id");
+
+            $.ajax({
+                url: '@Url.Action("DeleteSalonInfo", "Admin")',
+                type: 'POST',
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(id),
+                headers: { "RequestVerificationToken": $('input[name="__RequestVerificationToken"]').first().val() },
+                success: function (response) {
+                    if (response.success) {
+                        row.remove();
+                        alert("Запись удалена");
+                    } else {
+                        alert("Ошибка: " + response.error);
+                    }
+                },
+                error: function () {
+                    alert("Ошибка запроса");
+                }
+            });
+        });
+            $("#slotCount").on("input", function () {
+        var count = parseInt($(this).val());
+        var container = $("#timeInputs");
+        container.empty(); // Очищаем предыдущие поля
+
+        if (!isNaN(count) && count > 0) {
+            for (var i = 1; i <= count; i++) {
+                var input = `
+                    <div>
+                        <label>Время для слота ${i}</label>
+                        <input type="time" name="CreateSlotsData.SlotTimes[${i - 1}]" required />
+                       
+                    </div>`;
+                container.append(input);
+            }
+        }
+    });
+    });
+</script>
+

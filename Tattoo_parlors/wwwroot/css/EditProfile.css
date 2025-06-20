@@ -1,0 +1,86 @@
+﻿/* Общие стили страницы */
+body, html {
+    background-color: #121212;
+    color: #e0e0e0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Контейнер формы */
+form {
+    max-width: 450px;
+    margin: 40px auto;
+    background: linear-gradient(145deg, #232323, #1b1b1b);
+    padding: 30px 40px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px #000000cc;
+}
+
+/* Заголовок страницы */
+h1 {
+    text-align: center;
+    font-weight: 700;
+    margin-bottom: 30px;
+    color: #6e6e6e; /* серый заголовок */
+}
+
+/* Группы полей */
+.form-group {
+    margin-bottom: 20px;
+}
+
+/* Метки */
+label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: #bbb;
+}
+
+/* Поля ввода */
+input.form-control {
+    width: 100%;
+    padding: 12px 15px;
+    background-color: #292929;
+    border: none;
+    border-radius: 12px;
+    color: #e0e0e0;
+    font-size: 1rem;
+    box-shadow: inset 0 2px 5px #000000cc;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+    input.form-control:focus {
+        outline: none;
+        background-color: #3a3a3a;
+        box-shadow: 0 0 8px #6e6e6e;
+    }
+
+/* Сообщения об ошибках */
+.text-danger {
+    color: #d94c4c;
+    font-size: 0.9rem;
+    margin-top: 6px;
+}
+
+/* Кнопка сохранения */
+.btn-primary {
+    width: 100%;
+    padding: 14px 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    background-color: #4a4a4a;
+    color: #fff;
+    border: none;
+    border-radius: 14px;
+    box-shadow: 0 0 12px #4a4a4aaa;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+    .btn-primary:hover {
+        background-color: #6e6e6e;
+        box-shadow: 0 0 20px #6e6e6eaa;
+        transform: scale(1.05);
+    }

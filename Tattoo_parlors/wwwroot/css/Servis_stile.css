@@ -1,0 +1,107 @@
+﻿html, body {
+    height: 100%;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+/* Фон страницы — без изменений */
+body {
+    background-image: url('../images/tum.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+}
+/* Контейнер для формы (левая и правая части) */
+.left-div, .right-div {
+    display: flex;
+    flex-direction: column; /* Расположение элементов вертикально */
+    align-items: center;
+    width: 500px;
+    height: auto; /* Высота подстраивается под контент */
+    padding: 30px 20px;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background-color: rgba(211, 211, 211, 0.9); /* Полупрозрачный светло-серый фон */
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.left-div {
+    left: 10%;
+}
+
+/* Стилизация формы */
+form#bookingForm {
+    width: 100%;
+}
+
+    form#bookingForm div {
+        margin-bottom: 20px;
+        width: 100%;
+    }
+
+    form#bookingForm label {
+        display: block;
+        font-weight: bold;
+        font-size: 16px;
+        margin-bottom: 5px;
+    }
+
+    /* Стилизация полей ввода и выпадающих списков */
+    form#bookingForm input[type="date"] {
+        width: 95%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+    form#bookingForm select {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        background-color: #fff;
+        font-size: 14px;
+        transition: border-color 0.3s;
+    }
+
+        form#bookingForm input[type="date"]:focus,
+        form#bookingForm select:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+    /* Стилизация кнопки отправки */
+    form#bookingForm button {
+        background-color: #333;
+        color: #fff;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+        width: 97%;
+        transition: background-color 0.3s;
+    }
+
+        form#bookingForm button:hover {
+            background-color: #0056b3;
+        }
+.right-div {
+    position: absolute;
+    top: 50%;
+    right: 10%;
+    transform: translateY(-50%);
+    width: 500px;
+    padding: 30px 20px;
+    background-color: rgba(211, 211, 211, 0.9);
+    
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
